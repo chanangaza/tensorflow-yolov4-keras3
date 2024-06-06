@@ -34,13 +34,11 @@ from ._common import (
     get_yolo_tiny_detections as _get_yolo_tiny_detections,
     fit_to_original as _fit_to_original,
 )
-from turbojpeg import TurboJPEG, TJPF_RGB
 
 
 class BaseClass:
     def __init__(self):
         self.config = YOLOConfig()
-        self.turboJpeg = TurboJPEG()
 
     def get_yolo_detections(self, yolos, prob_thresh: float) -> np.ndarray:
         """
@@ -138,7 +136,7 @@ class BaseClass:
     def inference(
         self,
         media_path,
-        is_image: bool = True,
+        is_image: bool = False,
         cv_apiPreference=None,
         cv_frame_size: tuple = None,
         cv_fourcc: str = None,
@@ -151,20 +149,24 @@ class BaseClass:
         cv2.namedWindow("result", cv2.WINDOW_AUTOSIZE)
 
         if is_image:
-            with open(media_path, "rb") as f:
-                imageFile = f.read()
-                frame = self.turboJpeg.decode(imageFile)
-                frame_rgb = self.turboJpeg.decode(
-                    imageFile, pixel_format=TJPF_RGB
-                )
+            
+            raise RuntimeError("inference with option 'is_image=True' is not supported YET!")
+            
+            #TODO: replace commented code below with CV2/Pillow JPEG decoding
+            # with open(media_path, "rb") as f:
+                # imageFile = f.read()
+                # frame = self.turboJpeg.decode(imageFile)
+                # frame_rgb = self.turboJpeg.decode(
+                    # imageFile, pixel_format=TJPF_RGB
+                # )
 
-            start_time = time.time()
-            bboxes = self.predict(frame_rgb, prob_thresh=prob_thresh)
-            exec_time = time.time() - start_time
-            print("time: {:.2f} ms".format(exec_time * 1000))
+            # start_time = time.time()
+            # bboxes = self.predict(frame_rgb, prob_thresh=prob_thresh)
+            # exec_time = time.time() - start_time
+            # print("time: {:.2f} ms".format(exec_time * 1000))
 
-            image = self.draw_bboxes(frame, bboxes)
-            cv2.imshow("result", image)
+            # image = self.draw_bboxes(frame, bboxes)
+            # cv2.imshow("result", image)
         else:
             if cv_apiPreference is None:
                 cap = cv2.VideoCapture(media_path)

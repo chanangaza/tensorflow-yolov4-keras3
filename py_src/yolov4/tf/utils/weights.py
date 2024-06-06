@@ -75,7 +75,7 @@ def yolo_conv2d_load_weights(yolo_conv2d, fd) -> bool:
             return False
 
     # darknet shape (out_dim, in_dim, kernel_size, kernel_size)
-    conv_shape = (filters, conv2d.input_shape[-1], *conv2d.kernel_size)
+    conv_shape = (filters, conv2d.input.shape[-1], *conv2d.kernel_size)
 
     conv_weights = _np_fromfile(
         fd, dtype=np.float32, count=np.product(conv_shape)

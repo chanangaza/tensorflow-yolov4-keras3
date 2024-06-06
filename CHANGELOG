@@ -1,3 +1,12 @@
+tensorflow-yolov4-keras3 (4.0.0) unstable; urgency=medium
+
+  * forward-porting to Tensorflow 2.16, Keras 3
+  * focused on converting darknet weights to Tensorflow savedmodel format
+  * beginning to remove anything unrelated to the above such as pyTurboJPEG used for inference
+
+ -- chanangaza <chanangaza@gmail.com>  Thu, 06 Jun 2024 23:30:53 +0200
+
+
 tensorflow-yolov4 (3.2.0) unstable; urgency=medium
 
   * config: add yolov4-tiny-relu-new_coords.cfg
