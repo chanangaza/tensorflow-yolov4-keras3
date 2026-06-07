@@ -78,7 +78,7 @@ def yolo_conv2d_load_weights(yolo_conv2d, fd) -> bool:
     conv_shape = (filters, conv2d.input.shape[-1], *conv2d.kernel_size)
 
     conv_weights = _np_fromfile(
-        fd, dtype=np.float32, count=np.product(conv_shape)
+        fd, dtype=np.float32, count=np.prod(conv_shape)
     )
     if conv_weights is None:
         return False
